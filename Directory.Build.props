@@ -1,0 +1,14 @@
+<Project>
+
+    <PropertyGroup>
+        <DebugType>embedded</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Company>ShareX Team</Company>
+        <Product>ShareX</Product>
+        <Copyright>Copyright (c) 2007-2022 ShareX Team</Copyright>
+        <Version>14.1.4</Version>
+    </PropertyGroup>
+  
+</Project>

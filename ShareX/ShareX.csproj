@@ -4,7 +4,9 @@
         <TargetFramework>net48</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <OutputType>WinExe</OutputType>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <ApplicationIcon>ShareX_Icon.ico</ApplicationIcon>
+        <Title>ShareX</Title>
+        <Description>Screen capture, file sharing and productivity tool</Description>
     </PropertyGroup>
 
     <ItemGroup>
@@ -25,5 +27,4 @@
         <ProjectReference Include="..\ShareX.UploadersLib\ShareX.UploadersLib.csproj" />
     </ItemGroup>
 
-    
 </Project>

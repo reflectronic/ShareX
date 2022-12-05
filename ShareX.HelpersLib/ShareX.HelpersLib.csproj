@@ -3,7 +3,6 @@
     <PropertyGroup>
         <TargetFramework>net48</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 

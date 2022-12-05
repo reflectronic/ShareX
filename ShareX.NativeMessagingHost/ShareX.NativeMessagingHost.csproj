@@ -4,11 +4,14 @@
         <TargetFramework>net48</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <OutputType>Exe</OutputType>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\ShareX.HelpersLib\ShareX.HelpersLib.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Properties\" />
     </ItemGroup>
 
 </Project>
