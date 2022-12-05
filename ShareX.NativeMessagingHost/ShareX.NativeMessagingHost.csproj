@@ -4,6 +4,7 @@
         <TargetFramework>net48</TargetFramework>
         <UseWindowsForms>true</UseWindowsForms>
         <OutputType>Exe</OutputType>
+        <Platforms>AnyCPU;x86;x64</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
