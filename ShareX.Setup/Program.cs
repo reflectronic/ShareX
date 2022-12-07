@@ -54,18 +54,32 @@ namespace ShareX.Setup
             MicrosoftStoreDebug = CreateMicrosoftStoreDebugFolder | CompileAppx | DownloadFFmpeg | CreateChecksumFile | OpenOutputDirectory
         }
 
+        private enum SetupArchitecture
+        {
+            AnyCpu,
+            X86,
+            X64,
+            // Arm64
+        }
+
         private static SetupJobs Job { get; set; } = SetupJobs.Release;
+
+        private static SetupArchitecture Architecture { get; set; } = SetupArchitecture.AnyCpu;
+
         private static bool Silent { get; set; } = false;
         private static bool AppVeyor { get; set; } = false;
 
         private static string ParentDir;
         private static string Configuration;
+        private static string ArchitectureDir;
         private static string AppVersion;
 
+        private const string TargetFramework = "net48";
+
         private static string SolutionPath => Path.Combine(ParentDir, "ShareX.sln");
-        private static string BinDir => Path.Combine(ParentDir, "ShareX", "bin", Configuration);
-        private static string NativeMessagingHostDir => Path.Combine(ParentDir, "ShareX.NativeMessagingHost", "bin", Configuration);
-        private static string SteamLauncherDir => Path.Combine(ParentDir, "ShareX.Steam", "bin", Configuration);
+        private static string BinDir => Path.Combine(ParentDir, "ShareX", "bin", ArchitectureDir, Configuration, TargetFramework);
+        private static string NativeMessagingHostDir => Path.Combine(ParentDir, "ShareX.NativeMessagingHost", "bin", ArchitectureDir, Configuration, TargetFramework);
+        private static string SteamLauncherDir => Path.Combine(ParentDir, "ShareX.Steam", "bin", ArchitectureDir, Configuration, TargetFramework);
         private static string ExecutablePath => Path.Combine(BinDir, "ShareX.exe");
 
         private static string OutputDir => Path.Combine(ParentDir, "Output");
@@ -99,6 +113,7 @@ namespace ShareX.Setup
             CheckArgs(args);
 
             Console.WriteLine("Job: " + Job);
+            Console.WriteLine("Architecture: " + Architecture);
 
             UpdatePaths();
 
@@ -175,11 +190,9 @@ namespace ShareX.Setup
                 Console.WriteLine("Silent: " + Silent);
             }
 
-            CLICommand command = cli.GetCommand("Job");
-
-            if (command != null)
+            if (cli.GetCommand("Job") is CLICommand jobCommand)
             {
-                string parameter = command.Parameter;
+                string parameter = jobCommand.Parameter;
 
                 if (Enum.TryParse(parameter, out SetupJobs job))
                 {
@@ -188,6 +201,21 @@ namespace ShareX.Setup
                 else
                 {
                     Console.WriteLine("Invalid job: " + parameter);
+
+                    Environment.Exit(0);
+                }
+            }
+
+            if (cli.GetCommand("Arch") is CLICommand archCommand)
+            {
+                string parameter = archCommand.Parameter;
+                if (Enum.TryParse(parameter, out SetupArchitecture arch))
+                {
+                    Architecture = arch;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid architecture: " + parameter);
 
                     Environment.Exit(0);
                 }
@@ -233,6 +261,19 @@ namespace ShareX.Setup
             else
             {
                 Configuration = "Release";
+            }
+
+            switch (Architecture)
+            {
+                case SetupArchitecture.AnyCpu:
+                    ArchitectureDir = "";
+                    break;
+                case SetupArchitecture.X86:
+                    ArchitectureDir = "x86";
+                    break;
+                case SetupArchitecture.X64:
+                    ArchitectureDir = "x64";
+                    break;
             }
 
             Console.WriteLine("Configuration: " + Configuration);

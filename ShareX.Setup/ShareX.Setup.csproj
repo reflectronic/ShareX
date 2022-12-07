@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\ShareX.HelpersLib\ShareX.HelpersLib.csproj" />
+        <Reference Include="System.IO.Compression" />
     </ItemGroup>
   
 </Project>
